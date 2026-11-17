@@ -1,17 +1,17 @@
 /* ============================================================
- * server.js — 棋匠 本地服务（端口 8765，零依赖）
+ * server.js — 棋思妙想 本地服务（端口 8765，零依赖）
  *
  * 作用：
  *   1. 以 http://localhost:8765 打开页面（file:// 下浏览器无法遍历 preset 目录）
  *   2. GET  /api/presets            列出 preset/*.json，按 name 字段显示
  *   3. GET  /api/preset?file=xx     读取单个预设内容（自对弈新标签页用）
- *   4. POST /api/preset/save        保存当前规则 → preset/棋匠-<名称>.json
+ *   4. POST /api/preset/save        保存当前规则 → preset/棋思妙想-<名称>.json
  *   5. POST /api/standalone         保存独立版单文件 HTML → game/<名称>.html（相对项目根目录）
  *   6. GET  /api/engine/status      引擎状态（engine/fairy-stockfish）
  *   7. POST /api/engine/configure   规则 JSON → engine/variants.ini + 重启引擎
  *   8. POST /api/engine/move        FEN + 变体 → 引擎着法（UCI）
  *
- * 用法: node server.js  （或双击 启动棋匠.bat）
+ * 用法: node server.js  （或双击 点我启动.bat）
  * ============================================================ */
 'use strict';
 const http = require('http');
@@ -128,7 +128,7 @@ function patToBetza(pat) {
 function buildVariantIni(rules) {
   const name = safeName(rules && rules.name || '变体', 'Variant');
   const L = [];
-  L.push('# 由棋匠根据规则 JSON 自动生成，修改请直接编辑页面规则，本文件会被覆盖');
+  L.push('# 由棋思妙想根据规则 JSON 自动生成，修改请直接编辑页面规则，本文件会被覆盖');
   L.push('');
   L.push('[' + name + ':xiangqi]');
   const pieces = (rules && rules.pieces) || {};
@@ -477,7 +477,7 @@ const server = http.createServer(async (req, res) => {
     const rules = body && body.rules;
     if (!rules || typeof rules !== 'object') { send(res, 400, { ok: false, error: '规则数据缺失' }); return; }
     const name = safeName(rules.name || '我的变体', '变体');
-    const file = '棋匠-' + name + '.json';
+    const file = '棋思妙想-' + name + '.json';
     try {
       fs.writeFileSync(path.join(PRESET_DIR, file), JSON.stringify(rules, null, 2), 'utf8');
       send(res, 200, { ok: true, file: file, name: name });
@@ -535,7 +535,7 @@ server.on('error', (err) => {
 
 server.listen(8765, () => {
   console.log('========================================');
-  console.log(' ChessCraft local server: http://localhost:8765');
+  console.log(' Xiangqi Studio local server: http://localhost:8765');
   console.log(' Presets: preset/ (auto-listed on page)');
   console.log(' Engine: engine/fairy-stockfish-largeboard_x86-64.exe');
   console.log(' Close this window to stop the server');

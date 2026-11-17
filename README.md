@@ -1,4 +1,4 @@
-# 棋匠 (ChessCraft)
+# 棋思妙想 (Xiangqi Studio)
 
 一个本地运行的中国象棋变体创作与对战平台。包含可视化编辑，自定义棋规，支持自带 JS 引擎（可选 Fairy-Stockfish）对弈，支持局域网内联机。
 
@@ -41,7 +41,7 @@ node server.js
 ## 📁 目录结构
 
 ```
-ChessCraft/
+xiangqi-studio/
 ├── index.html          # 主页面
 ├── server.js           # 本地服务（端口 8765）
 ├── 点我启动.bat         # 一键启动脚本

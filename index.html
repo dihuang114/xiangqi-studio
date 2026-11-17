@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>棋匠</title>
+<title>棋思妙想</title>
 <style>
 
   :root {
@@ -309,11 +309,103 @@
   }
 
 </style>
+<style id="workspaceTheme">
+/* Flat workspace theme. Board and piece materials remain in the base styles. */
+:root { --bg:#f5f4f0; --panel:#fff; --panel-line:#dedfd8; --text:#252d29; --dim:#626b64; --accent:#356653; --dark:#f0f2ed; --danger:#ae3434; }
+body { margin:0; background:var(--bg); }
+.topbar, main.layout, .topbar *, main.layout :not(#board):not(#board *) { box-sizing:border-box; }
+h1,h2,h3,h4,p { margin-top:0; }
+header.topbar { padding:16px 32px; gap:24px; background:var(--panel); box-shadow:none; }
+.brand { display:flex; align-items:center; gap:12px; }
+.brand-mark { display:grid; place-items:center; width:42px; height:42px; background:var(--accent); color:white; font-size:26px; font-family:KaiTi,STKaiti,serif; border-radius:4px; }
+header.topbar h1 { margin:0; font-size:22px; line-height:1.35; letter-spacing:2px; }
+.brand-en { display:block; font-size:10px; letter-spacing:2px; color:var(--dim); margin-top:3px; }
+.brand-description { margin:0 auto 0 12px; font-size:13px; color:var(--dim); }
+button,select,input[type=number],input[type=text],#netRoomInput { min-height:38px; border-radius:4px; background:var(--panel); padding:8px 12px; color:var(--text); border:1px solid var(--panel-line); font:inherit; font-size:13px; }
+button { transition:background .15s,border-color .15s; }
+button:hover,select:hover { background:var(--dark); border-color:#8caa99; }
+button:active { transform:none; background:#e1e9e2; }
+button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+button.primary:hover { background:#285240; }
+:where(button,select,input,summary,[tabindex]):focus-visible { outline:3px solid #749b84; outline-offset:3px; }
+input[type=checkbox] { accent-color:var(--accent); }
+main.layout { display:grid; grid-template-columns:minmax(0,1fr) 340px; max-width:1240px; margin:0 auto; gap:36px; padding:28px 32px 40px; align-items:start; }
+body.in-config main.layout { grid-template-columns:minmax(0,1fr) 440px; max-width:1380px; }
+#boardArea { min-width:0; gap:16px; }
+#boardWrap { width:100%; display:flex; justify-content:center; padding:8px 0 12px; }
+#board { max-width:100%; }
+.board-toolbar { width:100%; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding-bottom:16px; border-bottom:1px solid var(--panel-line); }
+.game-actions,.board-options { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+.board-options { justify-content:center; gap:20px; }
+.ctl { gap:8px; }
+.hint { text-align:center; margin:0; font-size:12px; }
+#side { width:100%; max-width:none; max-height:none; overflow:visible; padding:0; gap:20px; }
+#sidePlay,#sideConfig { gap:20px; }
+.panel { border-radius:4px; padding:18px 20px; box-shadow:none; }
+.panel summary { color:var(--text); font-weight:600; padding:2px 0; }
+.panel summary:hover { color:var(--accent); }
+.panel[open]>summary { margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--panel-line); }
+.rcard { background:transparent; border:0; border-top:1px solid var(--panel-line); border-radius:0; padding:16px 0 0; margin:16px 0 0; }
+.rcard:first-of-type { border-top:0; margin-top:0; padding-top:0; }
+.rcard h4 { margin:0 0 12px; }
+.pe-slot,.pe-patrow { background:var(--bg); border-radius:4px; padding:10px; }
+.pe-chip { font-size:12px; min-height:30px; border-radius:3px; }
+.pe-chip.on { background:#e6eee8; }
+.pe-chip:has(input:focus-visible) { outline:2px solid var(--accent); outline-offset:2px; }
+.pe-chip input { display:inline-block; width:12px; height:12px; }
+.pe-tabs { border-bottom:1px solid var(--panel-line); gap:4px; padding-bottom:8px; }
+.pe-tabs button.active { background:#e6eee8; }
+.pe-opts { gap:10px; line-height:1.8; }
+.pe-opts select { max-width:100%; }
+.ptools { gap:8px; }
+.ptools select { max-width:100%; min-width:0; }
+#rulesName,#preset { flex:1 1 100%; width:100%; }
+.rrow { min-height:32px; flex-wrap:wrap; }
+.rrow .desc { font-size:12px; }
+.status { background:#edf3ee; border:0; border-left:3px solid var(--accent); border-radius:2px; padding:14px; margin-bottom:16px; }
+.status.win-red,.clocks .clk.low { color:var(--danger); }
+.status.win-black { color:var(--text); border-color:var(--text); }
+.status.pause { color:#315f88; background:#edf3f8; }
+@keyframes statusFlash { 0%,100% { background:#f9eeee; } 50% { background:#f1dada; } }
+.clocks .clk { background:var(--dark); border-radius:3px; }
+.captures { gap:12px; flex-wrap:wrap; padding-bottom:12px; border-bottom:1px solid var(--panel-line); }
+.section-label { font-size:12px; font-weight:500; color:var(--dim); margin:16px 0 8px; }
+#moveLog { background:var(--bg); border-radius:3px; min-height:100px; max-height:230px; }
+#moveLog:empty::before { content:'暂无着法，等待第一步'; display:block; padding:24px 0; text-align:center; color:var(--dim); font-family:inherit; }
+#moveLog .rd { color:var(--danger); } #moveLog .bd { color:var(--text); } #moveLog .num { color:var(--dim); }
+#moveLog div:nth-child(odd) { background:#eaece6; }
+.ap-tools { gap:12px; }
+.note { font-size:12px; line-height:1.8; overflow-wrap:anywhere; }
+button#btnDelPiece,.pe-patrow .pe-delpat { color:var(--danger) !important; }
+body.in-selfplay main.layout { display:block; max-width:960px; }
+#spView { max-width:none !important; min-width:0 !important; width:100%; }
+.selfplay-header #btnConfig { display:none; }
+#spProgress,#spLog,.bar-row .track,#ap-progress { background:var(--dark) !important; border-radius:3px !important; }
+#spProgressFill,#ap-progress-fill { background:var(--accent) !important; }
+#spBarBlack { background:#414c46 !important; }
+.stats { gap:0; border:1px solid var(--panel-line); border-radius:4px; background:var(--panel); margin:24px 0; }
+.st-box { border:0; border-radius:0; background:transparent; padding:20px 8px; }
+.st-box .v { font-size:20px; } .st-box .k { font-size:12px; margin-top:4px; }
+.st-box .v.red { color:var(--danger); } .st-box .v.blue { color:#315f88; } .st-box .v.gray { color:var(--dim); }
+.rulesDesc { border-radius:4px; }
+.chip.blackc { color:#fff; }
+@media(min-width:1001px) { body.in-config #boardArea { position:sticky; top:114px; } }
+@media(max-width:1000px) { main.layout,body.in-config main.layout { grid-template-columns:minmax(0,1fr); max-width:760px; padding:20px; gap:24px; } header.topbar { padding:14px 20px; } .brand-description { display:none; } header.topbar #btnConfig { margin-left:auto; } #side { max-height:none; } }
+@media(max-width:480px) { header.topbar { padding:12px 16px; gap:12px; } header.topbar h1 { font-size:19px; } main.layout,body.in-config main.layout { padding:16px 12px 28px; } .brand-mark { width:36px; height:36px; } .panel { padding:16px; } button,select,input[type=number],input[type=text],#netRoomInput { min-height:44px; } .board-toolbar { gap:10px; } .game-actions { flex:1; justify-content:flex-end; } .game-actions button { padding:8px 10px; } .st-box .v { font-size:16px; } }
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none !important; transition:none !important; } }
+</style>
 </head>
 <body>
 
 <header class="topbar">
-  <h1>棋匠</h1>
+  <div class="brand"><span class="brand-mark" aria-hidden="true">思</span><div><h1>棋思妙想</h1><span class="brand-en">XIANGQI STUDIO</span></div></div>
+  <p class="brand-description">让每一种棋思，都成为一局好棋。</p>
+  <button id="btnConfig" class="primary" aria-pressed="false">规则配置</button>
+</header>
+
+<main class="layout">
+  <section id="boardArea" aria-label="棋盘与对局操作">
+    <div class="board-toolbar">
   <label class="ctl">模式
     <select id="mode">
       <option value="pvp" selected>本地对战</option>
@@ -322,22 +414,11 @@
       <option value="net">局域网对战</option>
     </select>
   </label>
-  <label class="ctl">视角
-    <select id="flipMenu" title="棋盘视角">
-      <option value="red" selected>我执红</option>
-      <option value="black">我执黑</option>
-    </select>
-  </label>
-  <label class="ctl"><input type="checkbox" id="chkFlipSide"> 翻转<span class="desc" title=""></span></label>
-  <button id="btnPause" style="display:none">暂停</button>
+<div class="game-actions">  <button id="btnPause" style="display:none">暂停</button>
   <button id="btnHint" style="display:none">提示</button>
   <button id="btnNew">新对局</button>
   <button id="btnUndo">悔棋</button>
-  <button id="btnConfig" class="primary">规则配置</button>
-</header>
-
-<main class="layout">
-  <section id="boardArea">
+</div></div>
     <div id="boardWrap">
       <div id="board">
         <svg id="boardSvg" viewBox="-70 -62 940 1024" preserveAspectRatio="xMidYMid meet"></svg>
@@ -345,7 +426,15 @@
         <div id="pieces"></div>
       </div>
     </div>
-    <p class="hint">规则改动即时生效；人机模式你执红方</p>
+    <div class="board-options">  <label class="ctl">视角
+    <select id="flipMenu" title="棋盘视角">
+      <option value="red" selected>我执红</option>
+      <option value="black">我执黑</option>
+    </select>
+  </label>
+  <label class="ctl"><input type="checkbox" id="chkFlipSide"> 翻转<span class="desc" title=""></span></label>
+</div>
+    <p class="hint">点击棋子开始走棋 · 在「规则配置」中创作你的象棋变体</p>
   </section>
 
   <aside id="side">
@@ -353,7 +442,7 @@
     <details class="panel" open>
       <summary>预设配置</summary>
       <div class="ptools">
-        <input type="text" id="rulesName" value="我的变体" placeholder="规则名称">
+        <input type="text" id="rulesName" aria-label="规则名称" value="我的变体" placeholder="规则名称">
         <select id="preset" title="预设"></select>
         <button id="btnDelPreset" style="display:none" title="删除选中的「我的预设」（内置预设不可删除）">删除预设</button>
         <button id="btnExport">保存并导出预设</button>
@@ -391,7 +480,7 @@
         <h4>棋子列表</h4>
         <div id="pieceList" class="plist"></div>
         <div class="ptools" style="margin-bottom:0">
-          <input type="text" id="newPieceName" placeholder="请输入新棋子名称" style="flex:1;min-width:80px">
+          <input type="text" id="newPieceName" aria-label="新棋子名称" placeholder="请输入新棋子名称" style="flex:1;min-width:80px">
           <button id="btnNewPiece">新建棋子</button>
         </div>
       </div>
@@ -449,7 +538,7 @@
     <div id="sidePlay">
     <details class="panel" open>
       <summary>对局</summary>
-      <div id="status" class="status">红方走棋</div>
+      <div id="status" class="status" role="status" aria-live="polite">红方走棋</div>
       <div id="clocks" class="clocks" style="display:none">
         <span class="clk red" id="clkRed">--:--</span>
         <span class="clk black" id="clkBlack">--:--</span>
@@ -458,14 +547,15 @@
         <span><b>红方吃掉</b><span class="items" id="capRed">—</span></span>
         <span><b>黑方吃掉</b><span class="items" id="capBlack">—</span></span>
       </div>
-      <div id="moveLog"></div>
+      <h3 class="section-label">行棋记录</h3>
+      <div id="moveLog" aria-label="行棋记录"></div>
     </details>
 
     <details class="panel" id="netPanel" style="display:none">
       <summary>局域网对战（创建 / 加入房间）</summary>
       <div class="ptools" style="margin-bottom:0">
         <button id="netCreate">创建房间</button>
-        <input id="netRoomInput" placeholder="房间号" style="width:86px">
+        <input id="netRoomInput" aria-label="房间号" placeholder="房间号" style="width:86px">
         <button id="netJoin">加入</button>
       </div>
       <div class="ptools" style="margin-bottom:0">
@@ -480,7 +570,7 @@
     </details>
 
     <details class="panel" id="aiPanel" open>
-      <summary>AI 设置</summary>
+      <summary>电脑与自对弈</summary>
       <div class="ap-tools">
         <label id="wrapDepth">深度 <select id="diff">
           <option value="1">1</option><option value="2">2</option><option value="3">3</option>
@@ -3883,8 +3973,8 @@ var SP_MODE = /[?&]mode=selfplay/i.test(location.search);
 // ---- 静态模式预设库：内置预设（随部署的 preset/ 文件）+ 本浏览器「我的预设」（localStorage） ----
 var MY_PRESETS_KEY = 'chesscraft-mypresets-v1';
 var BUILTIN_PRESETS = [
-  { file: '棋匠-标准象棋.json', name: '标准象棋' },
-  { file: '棋匠-空白棋盘.json', name: '空白棋盘' }
+  { file: '棋思妙想-标准象棋.json', name: '标准象棋' },
+  { file: '棋思妙想-空白棋盘.json', name: '空白棋盘' }
 ];
 function readMyPresets() {
   try { var o = JSON.parse(localStorage.getItem(MY_PRESETS_KEY) || '{}'); return (o && typeof o === 'object') ? o : {}; } catch (e) { return {}; }
@@ -3914,7 +4004,7 @@ function loadPresetList() {
   var sel = $('preset');
   if (!SERVER) {
     if (location.protocol === 'file:') {
-      sel.innerHTML = '<option value="">（请通过 启动棋匠.bat 打开页面以读取 preset 文件夹）</option>';
+      sel.innerHTML = '<option value="">（请通过 点我启动.bat 打开页面以读取 preset 文件夹）</option>';
       return;
     }
     // 静态托管模式：内置预设（随部署的 preset/ 文件）+ 本浏览器「我的预设」
@@ -4006,7 +4096,7 @@ function applyPreset() {
   }
 }
 
-// 保存并导出预设：保存到 preset/棋匠-<名称>.json，刷新预设列表（不刷新页面）
+// 保存并导出预设：保存到 preset/棋思妙想-<名称>.json，刷新预设列表（不刷新页面）
 // 规则合法性快速校验（参考：随机对局可达性 / 死循环检测）——保存预设时提示
 function quickValidate(rules) {
   var savedRules = JSON.stringify(RULES);
@@ -4048,7 +4138,7 @@ function exportJSON() {
   RULES.name = rules.name;   // 同步回真源（自对弈校验依赖此名称）
   saveRules();
   var json = JSON.stringify(rules, null, 2);
-  var fileName = '棋匠-' + (rules.name.replace(/[\\/:*?"<>|]/g, '').trim() || '变体') + '.json';
+  var fileName = '棋思妙想-' + (rules.name.replace(/[\\/:*?"<>|]/g, '').trim() || '变体') + '.json';
   if (SERVER) {
     fetch('/api/preset/save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ rules: rules }) })
       .then(function(r) { return r.json(); })
@@ -4099,7 +4189,7 @@ function importJSON(text) {
     mine[RULES.name] = currentRulesJSON();
     writeMyPresets(mine);
     loadPresetList();
-    downloadBlob(JSON.stringify(currentRulesJSON(), null, 2), '棋匠-' + (RULES.name.replace(/[\\/:*?"<>|]/g, '').trim() || '变体') + '.json', 'application/json');
+    downloadBlob(JSON.stringify(currentRulesJSON(), null, 2), '棋思妙想-' + (RULES.name.replace(/[\\/:*?"<>|]/g, '').trim() || '变体') + '.json', 'application/json');
   }
 }
 
@@ -4120,7 +4210,7 @@ function oneClickSelfplay() {
     setApStatus('正在检查预设…');
     if (SERVER) {
       fetch('/api/presets').then(function(r) { return r.json(); }).then(function(res) {
-        var target = '棋匠-' + name.replace(/[\\/:*?"<>|]/g, '').trim() + '.json';
+        var target = '棋思妙想-' + name.replace(/[\\/:*?"<>|]/g, '').trim() + '.json';
         var found = res && res.ok && res.presets.some(function(p) { return p.file === target; });
         if (!found) {
           setApStatus('请先点击「保存并导出预设」，将当前规则保存为 ' + target + ' 后才能自对弈');
@@ -4165,7 +4255,7 @@ function spLoadRules() {
   var fail = function(msg) {
     // 加载失败：页面内明确提示（不弹 alert，避免新标签页看似空白）
     $('spRuleInfo').textContent = msg;
-    $('spRuleInfo').style.color = '#ff8d80';
+    $('spRuleInfo').style.color = 'var(--danger)';
     $('spStart').disabled = true;
   };
   var fromHash = function() {
@@ -4195,11 +4285,11 @@ function selfplayBootstrap() {
   var sv = $('spView');
   if (sv) sv.style.display = 'block';   // 覆盖内联 display:none（CSS 类选择器优先级不够）
   var tb = document.querySelector('header.topbar');
-  if (tb) tb.style.display = 'none';   // 自对弈页只保留统计面板
+  if (tb) tb.classList.add('selfplay-header');   // 保留品牌栏，隐藏与统计无关的配置入口
   // 兜底：任何 JS 错误直接显示在页面上（便于定位问题，避免"空白页"）
   window.addEventListener('error', function(ev) {
     var info = $('spRuleInfo');
-    if (info) { info.textContent = '页面出错：' + (ev.message || ev.type) + (ev.filename ? ' @' + ev.filename.split('/').pop() + ':' + ev.lineno : ''); info.style.color = '#ff8d80'; }
+    if (info) { info.textContent = '页面出错：' + (ev.message || ev.type) + (ev.filename ? ' @' + ev.filename.split('/').pop() + ':' + ev.lineno : ''); info.style.color = 'var(--danger)'; }
   });
   spLoadRules();
 }
@@ -4369,7 +4459,7 @@ async function spRun() {
   } catch (err) {
     console.error('[SP] worker create failed:', err);
     $('spProgressText').textContent = '无法启动对弈线程：' + (err && err.message ? err.message : err);
-    $('spProgressText').style.color = '#ff8d80';
+    $('spProgressText').style.color = 'var(--danger)';
     $('spStart').disabled = false;
     $('spStop').style.display = 'none';
     return;
@@ -4381,13 +4471,13 @@ async function spRun() {
     else if (msg.type === 'error') {
       console.error('[SP] worker error:', msg.message);
       $('spProgressText').textContent = '对弈出错：' + msg.message;
-      $('spProgressText').style.color = '#ff8d80';
+      $('spProgressText').style.color = 'var(--danger)';
     }
   };
   spWorker.onerror = function(ev) {
     console.error('[SP] worker onerror:', ev && ev.message, ev && ev.filename, ev && ev.lineno);
     $('spProgressText').textContent = '对弈线程出错：' + (ev && ev.message ? ev.message : '未知');
-    $('spProgressText').style.color = '#ff8d80';
+    $('spProgressText').style.color = 'var(--danger)';
   };
   spWorker.postMessage({ type: 'start', rules: JSON.stringify(RULES), games: games, depth: depth, style: $('aiStyle') ? $('aiStyle').value : 'balanced', engine: engine });
 }
@@ -4415,7 +4505,7 @@ function spBuildReport() {
   var name = RULES.name || '变体';
   var L = [];
   L.push('============================================');
-  L.push('          棋匠 · 自对弈报告');
+  L.push('          棋思妙想 · 自对弈报告');
   L.push('============================================');
   L.push('1. 规则名称：' + name);
   L.push('2. 对弈局数：' + s.total + ' 局（AI 深度 ' + s.depth + '）');
@@ -4449,12 +4539,12 @@ function spBuildReport() {
 
 function spExportTxt() {
   if (!spReport) { toast('尚无报告'); return; }
-  downloadBlob(spReport, '棋匠-' + (RULES.name || '变体').replace(/[\\/:*?"<>|]/g, '') + '-自对弈报告.txt', 'text/plain');
+  downloadBlob(spReport, '棋思妙想-' + (RULES.name || '变体').replace(/[\\/:*?"<>|]/g, '') + '-自对弈报告.txt', 'text/plain');
 }
 function spExportJson() {
   if (!spState || !spState.results.length) { toast('尚无对局数据'); return; }
   var out = { rules: RULES.name, depth: spState.depth, games: spState.results };
-  downloadBlob(JSON.stringify(out, null, 2), '棋匠-' + (RULES.name || '变体').replace(/[\\/:*?"<>|]/g, '') + '-对局明细.json', 'application/json');
+  downloadBlob(JSON.stringify(out, null, 2), '棋思妙想-' + (RULES.name || '变体').replace(/[\\/:*?"<>|]/g, '') + '-对局明细.json', 'application/json');
 }
 
 function engineSource() {
@@ -4475,7 +4565,7 @@ function buildStandaloneHTML(rules, desc) {
   t += '<!DOCTYPE html>\n';
   t += '<html lang="zh-CN">\n<head>\n<meta charset="UTF-8">\n';
   t += '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
-  t += '<title>棋匠 · ' + esc(name) + '</title>\n';
+  t += '<title>棋思妙想 · ' + esc(name) + '</title>\n';
   t += '<style>\n';
   t += '* { box-sizing: border-box; margin: 0; padding: 0; }\n';
   t += ':root { --bg:#241d15; --panel:#362a1c; --panel-line:#5d4a2f; --text:#efe3c8; --dim:#b9a884; --accent:#e8b64c; --dark:#241b12; }\n';
@@ -4512,9 +4602,10 @@ function buildStandaloneHTML(rules, desc) {
   t += '#moveLog { max-height: 150px; overflow-y: auto; font-size: 13px; line-height: 1.7; background: #1d160e; border-radius: 8px; padding: 8px 10px; font-family: Consolas, monospace; } #moveLog div:nth-child(odd) { background: rgba(255,255,255,.03); } #moveLog .rd { color: #ff9d92; } #moveLog .bd { color: #e6e6e6; } #moveLog .num { color: #8a7a58; margin-right: 6px; }\n';
   t += '.hint { font-size: 13px; color: var(--dim); }\n';
   t += '@media (max-width: 940px) { main.layout { flex-direction: column; align-items: center; } #board { width: min(92vmin, 560px); } }\n';
+  t += document.getElementById('workspaceTheme').textContent;
   t += '</style>\n</head>\n<body>\n';
   t += '<header class="topbar">\n';
-  t += '  <h1>棋匠 · ' + esc(name) + '<small></small></h1>\n';
+  t += '  <h1>棋思妙想 · ' + esc(name) + '<small></small></h1>\n';
   t += '  <label class="ctl">模式 <select id="mode"><option value="pvp" selected>本地对战</option><option value="ai">人机对战</option><option value="watch">AI对战</option></select></label>\n';
   t += '  <label class="ctl">AI 深度 <select id="diff"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select></label>\n';
   t += '  <label class="ctl">风格 <select id="aiStyle"><option value="balanced" selected>平衡</option><option value="solid">稳健</option><option value="random">随机</option></select></label>\n';
@@ -4619,6 +4710,7 @@ function toggleConfigMode() {
   var inCfg = !document.body.classList.contains('in-config');
   document.body.classList.toggle('in-config', inCfg);
   $('btnConfig').textContent = inCfg ? '返回对弈' : '规则配置';
+  $('btnConfig').setAttribute('aria-pressed', String(inCfg));
   state.thinking = false;
   state.sel = null; state.legal = [];
   // 退出配置模式时自动退出预演（恢复棋盘快照）
@@ -4766,7 +4858,7 @@ function toast(msg) {
   if (!el) {
     el = document.createElement('div');
     el.id = 'toast';
-    el.style.cssText = 'position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:rgba(20,14,8,.94);color:#efe3c8;border:1px solid var(--panel-line);border-left:4px solid var(--accent);padding:9px 18px;border-radius:8px;font-size:13px;z-index:999;max-width:82vw;box-shadow:0 8px 30px rgba(0,0,0,.5);transition:opacity .4s';
+    el.style.cssText = 'position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--panel);color:var(--text);border:1px solid var(--panel-line);border-left:4px solid var(--accent);padding:9px 18px;border-radius:8px;font-size:13px;z-index:999;max-width:82vw;box-shadow:none;transition:opacity .4s';
     document.body.appendChild(el);
   }
   el.textContent = msg;
@@ -5133,7 +5225,7 @@ window.__chesscraftServerReady.then(function () {
         }).catch(function() {});
       }
     };
-    fetch('preset/' + encodeURIComponent('棋匠-标准象棋.json'))
+    fetch('preset/' + encodeURIComponent('棋思妙想-标准象棋.json'))
       .then(function(r) { return r.json(); })
       .then(boot)
       .catch(function() { boot(null); });
