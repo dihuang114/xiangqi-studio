@@ -27,27 +27,27 @@
 node server.js
 ```
 
-然后访问 http://localhost:8765  （保持终端窗口开启；关闭即停止服务）。
+然后访问 http://localhost:8765  （请保持终端窗口开启，关闭即停止服务）。
 
 ### Fairy-Stockfish 引擎安装（可选）
 
-AI 对弈开箱即用（内置 JS 引擎）。Fairy-Stockfish 是可选增强引擎，棋力更强，但仅能映射部分棋规，无法完全映射的走法会自动回退到内置 AI。如需安装：
+对弈内置 JS 引擎。而 Fairy-Stockfish 是可选增强引擎，棋力更强，但仅能映射部分棋规，无法完全映射的走法会自动回退到内置 AI。如需安装：
 
 1. 前往 [Fairy-Stockfish 官方 Releases](https://github.com/fairy-stockfish/Fairy-Stockfish/releases) 下载
    **`fairy-stockfish-largeboard_x86-64.exe`**（Windows 64 位）
 2. 将文件放入项目的 `engine/` 目录
-3. 重启服务即可使用此引擎对弈
+3. 重启服务即可
 
 ## 📁 目录结构
 
 ```
 ChessCraft/
-├── index.html          # 前端主页面（单文件应用）
+├── index.html          # 主页面
 ├── server.js           # 本地服务（端口 8765）
 ├── 点我启动.bat         # 一键启动脚本
 ├── preset/             # 棋规预设
 ├── engine/             # 引擎目录（可选，需自行下载 Fairy-Stockfish exe）
-└── game/               # 独立版导出目录（运行时生成）
+└── game/               # 独立版导出目录
 ```
 
 ## 🔌 主要 API
@@ -66,4 +66,4 @@ ChessCraft/
 ## 📄 许可
 
 - **本项目代码**：MIT License（见 [LICENSE](LICENSE)）
-- **可选 AI 引擎**：[Fairy-Stockfish](https://github.com/fairy-stockfish/Fairy-Stockfish)（**GPL-3.0**，[源码](https://github.com/fairy-stockfish/Fairy-Stockfish)）。本项目不附带其二进制，由用户自行下载安装；引擎以独立进程方式与项目通信，二者不构成衍生作品。
+- **可选 AI 引擎**：[Fairy-Stockfish](https://github.com/fairy-stockfish/Fairy-Stockfish)（**GPL-3.0**，[源码](https://github.com/fairy-stockfish/Fairy-Stockfish)）。本项目不附带其二进制，由用户自行下载安装。
